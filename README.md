@@ -34,5 +34,6 @@ those stuff to one config.
 
 ## Links
 
-* [Quantumult](https://github.com/ConnersHua/Profiles/blob/master/Quantumult/Pro.conf)
-* [Surge3](https://github.com/lhie1/Rules/tree/master/Surge/Surge%203)
+* [lhie1/Rules](https://github.com/lhie1/Rules/tree/master/Surge/Surge%203)
+* [Surge3 配置详解 from zhuangzhuang](https://zhuangzhuang.cf/2018-11-14/surge/)
+* [ConnersHua/Profiles](https://raw.githubusercontent.com/ConnersHua/Profiles/master/Surge/Surge3.conf)
