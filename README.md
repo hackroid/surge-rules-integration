@@ -1,9 +1,9 @@
 # surge-rules-integration
 
-*Unfinished*
+**v1.0**
 
 This script grabs rules from [lhie1/Rules](https://github.com/lhie1/Rules) and your network provider, then integrates
-those stuff to one config.
+those stuff to one config. Two `conf` files use code from both lhie1 and ConnersHua.
 
 ## Dependencies
 
