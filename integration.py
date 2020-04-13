@@ -22,7 +22,7 @@ def file_dl(url):
 def rules_dl():
     print("Fetching rules...")
     full_str = file_dl(RULES_URL_FULL).strip("\n").strip("\r") + "\n\n\n"
-    where_rule = full_str.find("[Rule]")
+    where_rule = full_str.find("[Host]")
     return full_str[where_rule:]
 
 
@@ -121,10 +121,14 @@ def main():
     ProxyGroup = f.read().replace("{%%}", proxy_list)
     f.close()
 
-    Rule = rules_dl().strip("\n")
+    f = open("rule.conf", "r")
+    Rule = f.read()
+    f.close()
+
+    After = rules_dl().strip("\n")
 
     print("Integrating...")
-    Final = "\n\n\n".join([General, Proxy, ProxyGroup, Rule]) + "\n"
+    Final = "\n\n\n".join([General, Proxy, ProxyGroup, Rule, After]) + "\n"
     open(FULL_CONF, 'w').write(Final)
     print("Done @ {}".format(FULL_CONF))
 
