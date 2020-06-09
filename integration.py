@@ -1,17 +1,25 @@
 import requests
+from fake_useragent import UserAgent
 import os
+import sys
 
 TMP_DIR = "./tmp"
 SUB_URL_FILE = "./tmp/sub_url.txt"
 SUB_CONF = "./tmp/sub.conf"
 FULL_CONF = "./tmp/intel.conf"
+LOCAL_CONF = "./tmp/SSR Cloud.conf"
 
 RULES_URL_FULL = "https://raw.githubusercontent.com/ConnersHua/Profiles/master/Surge/Surge3.conf"
 
 
 def file_dl(url):
+    ua = UserAgent()
+    print(ua.chrome)
+    # header = {'User-Agent':str(ua.chrome)}
+    header = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36"}
+
     try:
-        file = requests.get(url)
+        file = requests.get(url, headers=header)
     except requests.exceptions.RequestException as e:
         print("Request error, url not found, please check your link, exiting...")
         raise SystemExit(e)
@@ -30,13 +38,20 @@ def sub_dl(url):
     print("Fetching sub...")
     sub_conf_content = file_dl(url)
 
-    if "<html>" in sub_conf_content:
+    if "<html>" or "DOCTYPE" in sub_conf_content:
         raise SystemExit("Route error, page not found, please check your link, exiting...")
 
     if "[Proxy]" not in sub_conf_content or "[Proxy Group]" not in sub_conf_content:
+        # print(sub_conf_content)
         raise SystemExit("File parsing error, [Proxy]/[Proxy Group] not found, please check your link, exiting...")
 
     return sub_conf_content
+
+def local_dl():
+    p = ""
+    with open(LOCAL_CONF, "r") as f:
+        p = f.read()
+    return p
 
 
 def sub_url_reader():
@@ -113,8 +128,9 @@ def main():
     General = f.read().strip("\n")
     f.close()
 
-    sub_url = sub_url_reader()
-    sub_conf_content = sub_dl(sub_url)
+    # sub_url = sub_url_reader()
+    sub_conf_content = local_dl()
+    # sub_conf_content = sub_dl(sub_url)
     Proxy, proxy_list = parse_sub(sub_conf_content)
 
     f = open("proxy_group.conf", "r")
